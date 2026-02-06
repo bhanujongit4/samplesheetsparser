@@ -20,7 +20,7 @@ export default function Home() {
   const fetchCountries = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/countries');
+      const response = await fetch('/api/portfolio');
       const data = await response.json();
       setCountries(data);
     } catch (error) {
