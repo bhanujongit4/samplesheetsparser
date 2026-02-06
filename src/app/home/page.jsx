@@ -78,123 +78,129 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       {/* Animated background */}
       <div className="fixed inset-0 bg-gradient-to-br from-red-950/20 via-black to-red-950/20 pointer-events-none"></div>
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-red-900/10 via-transparent to-transparent pointer-events-none"></div>
       
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-12">
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-6xl md:text-7xl font-black mb-4 bg-gradient-to-r from-red-500 via-white to-red-500 bg-clip-text text-transparent tracking-tight">
-           NSUTMUN ECOSOC 2024
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-3 sm:mb-4 bg-gradient-to-r from-red-500 via-white to-red-500 bg-clip-text text-transparent tracking-tight">
+            ECOSOC
           </h1>
-          <p className="text-gray-400 text-xl font-light tracking-wide">
-            Portfolio Matrix
+          <p className="text-gray-400 text-base sm:text-xl font-light tracking-wide px-4">
+            Country Allocation Dashboard
           </p>
         </div>
 
         {/* Stats Bar */}
-        <div className="grid grid-cols-4 gap-3 mb-8">
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-white mb-1">{getCount('ALL')}</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6 sm:mb-8">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{getCount('ALL')}</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider">Total</div>
           </div>
-          <div className="bg-green-500/5 backdrop-blur-sm border border-green-500/20 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-green-400 mb-1">{getCount('U')}</div>
+          <div className="bg-green-500/5 backdrop-blur-sm border border-green-500/20 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-1">{getCount('U')}</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider">Free</div>
           </div>
-          <div className="bg-yellow-500/5 backdrop-blur-sm border border-yellow-500/20 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-yellow-400 mb-1">{getCount('H')}</div>
+          <div className="bg-yellow-500/5 backdrop-blur-sm border border-yellow-500/20 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">{getCount('H')}</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider">Hold</div>
           </div>
-          <div className="bg-red-500/5 backdrop-blur-sm border border-red-500/20 rounded-xl p-4 text-center">
-            <div className="text-3xl font-bold text-red-400 mb-1">{getCount('A')}</div>
+          <div className="bg-red-500/5 backdrop-blur-sm border border-red-500/20 rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
+            <div className="text-2xl sm:text-3xl font-bold text-red-400 mb-1">{getCount('A')}</div>
             <div className="text-xs text-gray-400 uppercase tracking-wider">Taken</div>
           </div>
         </div>
 
         {/* Search & Filters */}
-        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 mb-6">
+        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
           {/* Search Bar */}
-          <div className="mb-5">
+          <div className="mb-4 sm:mb-5">
             <input
               type="text"
               placeholder="Search countries..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-6 py-4 bg-black/50 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"
+              className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-black/50 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-base sm:text-lg"
             />
           </div>
 
           {/* Filter Buttons */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             <button
               onClick={() => setFilter('ALL')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all text-sm uppercase tracking-wider ${
+              className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition-all text-xs sm:text-sm uppercase tracking-wider ${
                 filter === 'ALL'
                   ? 'bg-white text-black shadow-lg shadow-white/20'
                   : 'bg-white/10 text-gray-400 hover:bg-white/20 border border-white/10'
               }`}
             >
-              All <span className="ml-2 text-xs opacity-70">({getCount('ALL')})</span>
+              All <span className="ml-1 sm:ml-2 text-xs opacity-70">({getCount('ALL')})</span>
             </button>
             <button
               onClick={() => setFilter('U')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all text-sm uppercase tracking-wider ${
+              className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition-all text-xs sm:text-sm uppercase tracking-wider ${
                 filter === 'U'
                   ? 'bg-green-500 text-black shadow-lg shadow-green-500/30'
                   : 'bg-green-500/10 text-green-400 hover:bg-green-500/20 border border-green-500/30'
               }`}
             >
-              Unallotted <span className="ml-2 text-xs opacity-70">({getCount('U')})</span>
+              <span className="hidden sm:inline">Unallotted</span>
+              <span className="sm:hidden">Free</span>
+              <span className="ml-1 sm:ml-2 text-xs opacity-70">({getCount('U')})</span>
             </button>
             <button
               onClick={() => setFilter('H')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all text-sm uppercase tracking-wider ${
+              className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition-all text-xs sm:text-sm uppercase tracking-wider ${
                 filter === 'H'
                   ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/30'
                   : 'bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20 border border-yellow-500/30'
               }`}
             >
-              On Hold <span className="ml-2 text-xs opacity-70">({getCount('H')})</span>
+              <span className="hidden sm:inline">On Hold</span>
+              <span className="sm:hidden">Hold</span>
+              <span className="ml-1 sm:ml-2 text-xs opacity-70">({getCount('H')})</span>
             </button>
             <button
               onClick={() => setFilter('A')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all text-sm uppercase tracking-wider ${
+              className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition-all text-xs sm:text-sm uppercase tracking-wider ${
                 filter === 'A'
                   ? 'bg-red-500 text-black shadow-lg shadow-red-500/30'
                   : 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30'
               }`}
             >
-              Allotted <span className="ml-2 text-xs opacity-70">({getCount('A')})</span>
+              <span className="hidden sm:inline">Allotted</span>
+              <span className="sm:hidden">Taken</span>
+              <span className="ml-1 sm:ml-2 text-xs opacity-70">({getCount('A')})</span>
             </button>
           </div>
         </div>
 
         {/* Countries List */}
-        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-8">
+        <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-8">
           {loading ? (
-            <div className="text-center py-20">
-              <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-red-500 border-r-transparent mb-4"></div>
-              <p className="text-gray-400 text-lg">Loading countries...</p>
+            <div className="text-center py-16 sm:py-20">
+              <div className="inline-block h-10 w-10 sm:h-12 sm:w-12 animate-spin rounded-full border-4 border-solid border-red-500 border-r-transparent mb-4"></div>
+              <p className="text-gray-400 text-base sm:text-lg">Loading countries...</p>
             </div>
           ) : filteredCountries.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-gray-500 text-lg">No countries found</p>
+            <div className="text-center py-16 sm:py-20">
+              <p className="text-gray-500 text-base sm:text-lg">No countries found</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {filteredCountries.map((country, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all group"
+                  className="flex items-center justify-between p-4 sm:p-5 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10 hover:border-white/20 transition-all group"
                 >
-                  <span className="text-white text-lg font-semibold tracking-wide">
+                  <span className="text-white text-base sm:text-lg font-semibold tracking-wide pr-2">
                     {country.country}
                   </span>
                   <span
-                    className={`px-4 py-2 rounded-lg text-xs font-bold border uppercase tracking-widest ${getStatusColor(
+                    className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs font-bold border uppercase tracking-widest whitespace-nowrap ${getStatusColor(
                       country.status
                     )}`}
                   >
@@ -207,11 +213,11 @@ export default function Home() {
         </div>
 
         {/* Refresh Button */}
-        <div className="mt-8 text-center">
+        <div className="mt-6 sm:mt-8 text-center pb-4">
           <button
             onClick={fetchCountries}
             disabled={loading}
-            className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl font-bold hover:from-red-500 hover:to-red-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-red-500/30 text-lg uppercase tracking-wider"
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg sm:rounded-xl font-bold hover:from-red-500 hover:to-red-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-red-500/30 text-base sm:text-lg uppercase tracking-wider"
           >
             {loading ? 'Refreshing...' : 'Refresh Data'}
           </button>
