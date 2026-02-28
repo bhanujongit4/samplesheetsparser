@@ -33,7 +33,7 @@ export async function GET() {
     // Row 6 in Sheets is index 5 in the array
     
     // 1. Extract Permanent Members (Rows 6 to 10)
-    for (let i = 5; i <= 9; i++) {
+    for (let i = 4; i <= 9; i++) {
       if (lines[i]) {
         const data = parseLine(lines[i]);
         if (data) permanentMembers.push({ ...data, type: 'PERMANENT' });
@@ -41,7 +41,7 @@ export async function GET() {
     }
 
     // 2. Extract Non-Permanent Members (Rows 14 to 33)
-    for (let i = 13; i <= 32; i++) {
+    for (let i = 12; i <= 32; i++) {
       if (lines[i]) {
         const data = parseLine(lines[i]);
         if (data) nonPermanentMembers.push({ ...data, type: 'NON-PERMANENT' });
