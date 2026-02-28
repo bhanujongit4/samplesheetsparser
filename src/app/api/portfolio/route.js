@@ -41,7 +41,7 @@ export async function GET() {
     }
 
     // 2. Extract Non-Permanent Members (Rows 14 to 33)
-    for (let i = 12; i <= 32; i++) {
+    for (let i = 11; i <= 32; i++) {
       if (lines[i]) {
         const data = parseLine(lines[i]);
         if (data) nonPermanentMembers.push({ ...data, type: 'NON-PERMANENT' });
