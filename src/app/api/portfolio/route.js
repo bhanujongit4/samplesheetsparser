@@ -1,60 +1,61 @@
 import { NextResponse } from 'next/server';
 
-const SHEET_ID = '1xH9W0hDkHZBBsdp7q-DPSZEvM90NMm-Y75RF-OK4hLA';
-const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
+const SHEET_ID = '1fAqZqfhPTEWgts5dFLirfDKylp4EkJHaPPe-dm2frpY';
+const GID = '1771719611';
+// Using gviz/tq for precise sheet selection and CSV output
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GID}`;
 
 export async function GET() {
   try {
     const response = await fetch(SHEET_URL, {
-      cache: 'no-store', // Always fetch fresh data
+      cache: 'no-store', // Ensures we always get the latest data
     });
-    
+
+    if (!response.ok) throw new Error('Failed to fetch from Google Sheets');
+
     const csvText = await response.text();
-    console.log('Raw CSV:', csvText.substring(0, 500)); // Log first 500 chars
-    
-    // Parse CSV manually
     const lines = csvText.split('\n');
-    console.log('Total lines:', lines.length);
-    console.log('First 5 lines:', lines.slice(0, 5));
-    const countries = [];
     
-    // Skip rows 0, 1 (ECOSOC header and labels at row 2)
-    // Data starts at row 3 (index 2 in array)
-    for (let i = 2; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
+    const permanentMembers = [];
+    const nonPermanentMembers = [];
+
+    // Helper to clean and parse rows
+    const parseLine = (line) => {
+      const parts = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); // Split by comma not inside quotes
+      if (parts.length < 3) return null;
       
-      // Handle different CSV formats
-      let country, status;
-      
-      // Try quoted format: "Country","Status"
-      const quotedMatch = line.match(/^"([^"]+)","([^"]+)"$/);
-      if (quotedMatch) {
-        country = quotedMatch[1];
-        status = quotedMatch[2];
-      } else {
-        // Try comma-separated format: Country,Status
-        const parts = line.split(',');
-        if (parts.length >= 2) {
-          country = parts[0].replace(/^"|"$/g, '').trim();
-          status = parts[1].replace(/^"|"$/g, '').trim();
-        }
-      }
-      
-      if (country && status) {
-        countries.push({
-          country: country,
-          status: status.toUpperCase(),
-        });
+      const country = parts[1].replace(/^"|"$/g, '').trim(); // Column B
+      const status = parts[2].replace(/^"|"$/g, '').trim();  // Column C
+      return { country, status };
+    };
+
+    // Google Sheets index is 1-based, but CSV lines array is 0-based
+    // Row 6 in Sheets is index 5 in the array
+    
+    // 1. Extract Permanent Members (Rows 6 to 10)
+    for (let i = 5; i <= 9; i++) {
+      if (lines[i]) {
+        const data = parseLine(lines[i]);
+        if (data) permanentMembers.push({ ...data, type: 'PERMANENT' });
       }
     }
-    
-    console.log('Parsed countries count:', countries.length);
-    console.log('Sample countries:', countries.slice(0, 3));
-    
-    return NextResponse.json(countries);
+
+    // 2. Extract Non-Permanent Members (Rows 14 to 33)
+    for (let i = 13; i <= 32; i++) {
+      if (lines[i]) {
+        const data = parseLine(lines[i]);
+        if (data) nonPermanentMembers.push({ ...data, type: 'NON-PERMANENT' });
+      }
+    }
+
+    return NextResponse.json({
+      total: permanentMembers.length + nonPermanentMembers.length,
+      permanent: permanentMembers,
+      non_permanent: nonPermanentMembers
+    });
+
   } catch (error) {
-    console.error('Error fetching sheet:', error);
-    return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+    console.error('API Error:', error);
+    return NextResponse.json({ error: 'Internal Server Error', details: error.message }, { status: 500 });
   }
 }
