@@ -21,7 +21,7 @@ export default function Home() {
     try {
       setLoading(true);
       // Ensure this matches your API route path
-      const response = await fetch('/api/unsc'); 
+      const response = await fetch('/api/portfolio'); 
       const data = await response.json();
       
       // Since the API returns { permanent: [], non_permanent: [] }
